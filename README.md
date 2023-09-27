@@ -122,7 +122,7 @@ Arbitrary metadata may be stored in key/value pairs directly below any item (are
 - A space.
 - The value.
 
-The value may not span a newline. All values are strings.
+The value may not span a (hard) newline. All values are strings.
 
 ```text
 10-19 Area
