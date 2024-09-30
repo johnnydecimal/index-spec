@@ -130,3 +130,7 @@ The value may not span a (hard) newline. All values are strings.
       11.01 ID
       - Location: work email.
 ```
+
+# schema.ts
+
+Working file for a TypeScript/JSON schema. See [this blog post](https://jdcm.al/22.00.0081/).
