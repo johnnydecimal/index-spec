@@ -70,7 +70,7 @@ const jdSystem: JohnnyDecimalSystem = {
           },
           translations: {
             DE: {
-              title: "",
+              title: "Elf",
               metadata: {
                 description: "Es ist so toll.",
                 createdDate: "2024-09-30T06:16:53", // not needed here
