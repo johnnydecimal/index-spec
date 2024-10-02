@@ -14,11 +14,13 @@ interface ID {
   id: string;
   title: string;
   emoji?: string;
+  // not tags: we _generate_ tags, we don't store them
   isHeader: Boolean;
   metadata: Metadata;
   translations?: {
     [languageCode: string]: Translation;
   };
+  extensions?: Extensions;
 }
 
 interface Category {
@@ -46,6 +48,19 @@ interface Area {
   translations?: {
     [languageCode: string]: Translation;
   };
+}
+
+interface Extensions {
+  operationsManual?: OperationsManual;
+  [key: string]: any; // Allows for future extensibility
+}
+
+interface OperationsManual {
+  description: string;
+  url?: string;
+  version: string;
+  createdDate: string;
+  updatedDate: string;
 }
 
 interface JohnnyDecimalSystem {
@@ -139,9 +154,20 @@ const lifeAdmin: JohnnyDecimalSystem = {
               isHeader: false,
               metadata: {
                 description:
-                  "{&quot;content&quot;:&quot;\n&gt; Location: original in Pelican case ‘under the stairs’; scan in file system.\n&quot;}",
+                  "> Proof of your birth and name (or change of name) – where it all begins!",
+                urls: [
+                  "https://www.accesscanberra.act.gov.au/births-relationships-and-deaths",
+                ],
                 createdDate: "2024-09-30T23:53:37",
                 updatedDate: "2024-09-30T23:53:37",
+              },
+              extensions: {
+                operationsManual: {
+                  description: "My great ops manual",
+                  version: "1.0.0",
+                  createdDate: "2024-10-01T05:48:43",
+                  updatedDate: "2024-10-01T05:48:43",
+                },
               },
             },
           },
