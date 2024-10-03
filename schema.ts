@@ -15,7 +15,7 @@ interface ID {
   title: string;
   emoji?: string;
   // not tags: we _generate_ tags, we don't store them
-  isHeader: Boolean;
+  isHeader?: Boolean; // if you don't say it is, it isn't
   metadata: Metadata;
   translations?: {
     [languageCode: string]: Translation;
@@ -28,7 +28,7 @@ interface Category {
   title: string;
   emoji: string;
   metadata: Metadata;
-  ids: {
+  ids?: {
     [id: string]: ID;
   };
   translations?: {
@@ -42,7 +42,7 @@ interface Area {
   emoji: string;
   version: string;
   metadata: Metadata;
-  categories: {
+  categories?: {
     [id: string]: Category;
   };
   translations?: {
@@ -51,8 +51,13 @@ interface Area {
 }
 
 interface Extensions {
-  operationsManual?: OperationsManual;
-  [key: string]: any; // Allows for future extensibility
+  jd__smallBusiness?: JDSmallBusiness;
+  // operationsManual?: OperationsManual;
+  // [key: string]: any; // Allows for future extensibility
+}
+
+interface JDSmallBusiness {
+  placeholder: string;
 }
 
 interface OperationsManual {
@@ -71,43 +76,6 @@ interface JohnnyDecimalSystem {
     [id: string]: Area;
   };
 }
-
-const jdSystem: JohnnyDecimalSystem = {
-  systemId: "A01",
-  systemTitle: "Test",
-  areas: {
-    "10-19": {
-      id: "10-19",
-      title: "First area",
-      metadata: {
-        description: "The first one.",
-        createdDate: "2024-09-30T04:20:30",
-      },
-      categories: {
-        "11": {
-          id: "11",
-          title: "Eleven",
-          metadata: {
-            description: "It's so great.",
-            createdDate: "2024-09-30T04:24:50",
-          },
-          translations: {
-            DE: {
-              title: "Elf",
-              metadata: {
-                description: "Es ist so toll.",
-                createdDate: "2024-09-30T06:16:53", // not needed here
-              },
-            },
-          },
-          ids: {},
-        },
-      },
-    },
-  },
-};
-
-const test = jdSystem.areas["10-19"].categories["10"].ids;
 
 const lifeAdmin: JohnnyDecimalSystem = {
   systemId: "L01",
@@ -162,12 +130,60 @@ const lifeAdmin: JohnnyDecimalSystem = {
                 updatedDate: "2024-09-30T23:53:37",
               },
               extensions: {
-                operationsManual: {
-                  description: "My great ops manual",
-                  version: "1.0.0",
-                  createdDate: "2024-10-01T05:48:43",
-                  updatedDate: "2024-10-01T05:48:43",
+                // operationsManual: {
+                //   description: "My great ops manual",
+                //   version: "1.0.0",
+                //   createdDate: "2024-10-01T05:48:43",
+                //   updatedDate: "2024-10-01T05:48:43",
+                // },
+                jd__smallBusiness: {
+                  placeholder: "whatever",
                 },
+              },
+            },
+            "11.12": {
+              id: "11.12",
+              title: "Passports, residency, & citizenship",
+              metadata: {
+                description:
+                  "> Proof of where you were born and/or live.\n> - For trip-specific travel documents and visas, see [jd:15.50].",
+                createdDate: "2024-10-03T05:13:00",
+                updatedDate: "2024-10-03T05:13:00",
+              },
+            },
+          },
+        },
+        "12": {
+          id: "12",
+          title: "Where I live & how I get around",
+          emoji: "🏡",
+          metadata: {
+            description:
+              "> This **category** is all about your home and neighbourhood, and how you get from A to B.\n> \n> > If you have a lot going on in this category you might need to expand your system (see the [website](https://jdcm.al), [workbook](https://jdcm.al/14.02), or [workshop](https://jdcm.al/14.03)).\n> > *e.g. you own rental properties, you collect and do up old cars, you’re a farmer and maintain machinery and multiple vehicles.*\n> \n> This is a **heading**. Don’t store anything here. See **02.03** in the manual for more information.",
+            createdDate: "2024-10-03T05:13:00",
+            updatedDate: "2024-10-03T05:13:00",
+          },
+          ids: {
+            "12.10": {
+              id: "12.10",
+              title: "Home records",
+              emoji: "📄",
+              isHeader: true,
+              metadata: {
+                description:
+                  "> All the paperwork and instructions related to having a roof over your head.\n> \n> This is a **heading**. Don’t store anything here. See **02.03** in the manual for more information.",
+                createdDate: "2024-10-03T05:13:00",
+                updatedDate: "2024-10-03T05:13:00",
+              },
+            },
+            "12.11": {
+              id: "12.11",
+              title: "Official documents",
+              metadata: {
+                description:
+                  "> The important documents associated with being the current or past resident of an address, neatly sorted by year-month.\n> *e.g. rental leases and renewals, security deposits, inspection reports, rental ledgers, purchasing contracts, property deeds, formal disputes.*\n> - This can also include the future, so store your rental applications or property searches here too.",
+                createdDate: "2024-10-03T05:13:00",
+                updatedDate: "2024-10-03T05:13:00",
               },
             },
           },
@@ -176,3 +192,6 @@ const lifeAdmin: JohnnyDecimalSystem = {
     },
   },
 };
+
+// @ts-ignore
+module.exports = lifeAdmin;
