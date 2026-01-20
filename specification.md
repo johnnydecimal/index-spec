@@ -137,3 +137,88 @@ The portion before the decimal is the **category component**. The portion after 
   - ID `15.52` MUST NOT belong to category `16`.
 - An ID MUST NOT exist without a parent category.
 
+---
+
+# Metadata
+
+## Definition
+
+**Metadata** is a collection of key/value pairs attached to an ID.
+
+## Applicability
+
+- Metadata MAY be attached to IDs.
+- Metadata MUST NOT be attached to systems, areas, or categories.
+
+### Rationale
+
+IDs are the leaf nodes of a Johnny.Decimal system and the only place where data exists. Metadata about higher-level structures is stored using **standard zeros**:
+
+| Structure | Standard zero |
+|-----------|---------------|
+| System | `00.00` |
+| Area `20-29` | `20.00` |
+| Category `21` | `21.00` |
+
+To store metadata about category `21`, attach it to ID `21.00`. To store metadata about area `20-29`, attach it to ID `20.00`. To store metadata about the system itself, attach it to ID `00.00`.
+
+## Keys
+
+A metadata key:
+
+- MUST contain at least 1 character.
+- MUST match the pattern `[a-zA-Z][a-zA-Z0-9_]*`.
+- MUST be unique within the metadata of a single ID.
+
+### Reserved keys
+
+The following keys are reserved and have defined semantics:
+
+| Key | Type | Description |
+|-----|------|-------------|
+| `description` | string | A human-readable description of the ID |
+| `relatesTo` | array of ID references | References to other IDs in the same system |
+| `url` | array of URIs | External resources associated with this ID |
+
+Implementations MUST validate reserved keys according to their type definitions.
+
+Implementations SHOULD warn if a user attempts to use a reserved key with an invalid value.
+
+### User-defined keys
+
+Keys not listed as reserved MAY be used freely by users.
+
+User-defined keys SHOULD use camelCase for consistency with reserved keys.
+
+## Values
+
+A metadata value:
+
+- MUST be a valid JSON value (string, number, boolean, array, or object).
+- MUST NOT be null.
+
+### description
+
+The `description` value:
+
+- MUST be a string.
+- MAY be of arbitrary length.
+- Is interpreted as GitHub-Flavored Markdown (GFM). Plain text without formatting is valid.
+- Implementations that do not support Markdown rendering SHOULD display the raw text.
+
+### relatesTo
+
+The `relatesTo` value:
+
+- MUST be an array.
+- Each element MUST be a string matching the ID format (`[0-9][0-9].[0-9][0-9]`).
+- Each referenced ID SHOULD exist in the same system.
+- Relationships are one-way; implementations MAY derive backlinks.
+
+### url
+
+The `url` value:
+
+- MUST be an array.
+- Each element MUST be a valid URI (per RFC 3986).
+
