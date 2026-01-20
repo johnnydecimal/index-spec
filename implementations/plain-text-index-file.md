@@ -1,5 +1,5 @@
 ---
-status: DRAFT
+status: OLD, NEEDS REVIEW
 ---
 
 # Index specification
