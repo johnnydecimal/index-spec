@@ -1,5 +1,5 @@
 ---
-status: DRAFT
+status: WORKING_DRAFT
 ---
 
 # JSON implementation
@@ -35,12 +35,12 @@ A JSON file MUST contain a single JSON object where:
 
 Unlike the base specification, JSON files MUST include a system identifier.
 
-| Type | Key format | Example |
-|------|------------|---------|
-| System | `[A-Z][0-9][0-9]` | `"A01"` |
-| Area | `[0-9]0-[0-9]9` | `"10-19"` |
-| Category | `[0-9][0-9]` | `"11"` |
-| ID | `[0-9][0-9].[0-9][0-9]` | `"11.01"` |
+| Type     | Key format              | Example   |
+| -------- | ----------------------- | --------- |
+| System   | `[A-Z][0-9][0-9]`       | `"A01"`   |
+| Area     | `[0-9]0-[0-9]9`         | `"10-19"` |
+| Category | `[0-9][0-9]`            | `"11"`    |
+| ID       | `[0-9][0-9].[0-9][0-9]` | `"11.01"` |
 
 ---
 
@@ -55,9 +55,9 @@ Unlike the base specification, JSON files MUST include a system identifier.
 }
 ```
 
-| Field | Required | Description |
-|-------|----------|-------------|
-| `type` | REQUIRED | MUST be `"system"` |
+| Field   | Required | Description                     |
+| ------- | -------- | ------------------------------- |
+| `type`  | REQUIRED | MUST be `"system"`              |
 | `title` | REQUIRED | System title (1-255 characters) |
 
 ### Area record
@@ -69,9 +69,9 @@ Unlike the base specification, JSON files MUST include a system identifier.
 }
 ```
 
-| Field | Required | Description |
-|-------|----------|-------------|
-| `type` | REQUIRED | MUST be `"area"` |
+| Field   | Required | Description                   |
+| ------- | -------- | ----------------------------- |
+| `type`  | REQUIRED | MUST be `"area"`              |
 | `title` | REQUIRED | Area title (1-255 characters) |
 
 ### Category record
@@ -83,9 +83,9 @@ Unlike the base specification, JSON files MUST include a system identifier.
 }
 ```
 
-| Field | Required | Description |
-|-------|----------|-------------|
-| `type` | REQUIRED | MUST be `"category"` |
+| Field   | Required | Description                       |
+| ------- | -------- | --------------------------------- |
+| `type`  | REQUIRED | MUST be `"category"`              |
 | `title` | REQUIRED | Category title (1-255 characters) |
 
 ### ID record
@@ -98,10 +98,10 @@ Unlike the base specification, JSON files MUST include a system identifier.
 }
 ```
 
-| Field | Required | Description |
-|-------|----------|-------------|
-| `type` | REQUIRED | MUST be `"id"` |
-| `title` | REQUIRED | ID title (1-255 characters) |
+| Field      | Required | Description                              |
+| ---------- | -------- | ---------------------------------------- |
+| `type`     | REQUIRED | MUST be `"id"`                           |
+| `title`    | REQUIRED | ID title (1-255 characters)              |
 | `metadata` | OPTIONAL | Metadata object (see base specification) |
 
 ---
