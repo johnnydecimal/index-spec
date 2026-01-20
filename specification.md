@@ -1,5 +1,5 @@
 ---
-status: DRAFT
+status: WORKING_DRAFT
 ---
 
 # Johnny.Decimal specification
@@ -14,12 +14,12 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 Each record in a Johnny.Decimal system has a type. Implementations that expose type information MUST use the following canonical values:
 
-| Type | Value |
-|------|-------|
-| System | `system` |
-| Area | `area` |
+| Type     | Value      |
+| -------- | ---------- |
+| System   | `system`   |
+| Area     | `area`     |
 | Category | `category` |
-| ID | `id` |
+| ID       | `id`       |
 
 Type values MUST be lowercase.
 
@@ -154,11 +154,11 @@ The portion before the decimal is the **category component**. The portion after 
 
 IDs are the leaf nodes of a Johnny.Decimal system and the only place where data exists. Metadata about higher-level structures is stored using **standard zeros**:
 
-| Structure | Standard zero |
-|-----------|---------------|
-| System | `00.00` |
-| Area `20-29` | `20.00` |
-| Category `21` | `21.00` |
+| Structure     | Standard zero |
+| ------------- | ------------- |
+| System        | `00.00`       |
+| Area `20-29`  | `20.00`       |
+| Category `21` | `21.00`       |
 
 To store metadata about category `21`, attach it to ID `21.00`. To store metadata about area `20-29`, attach it to ID `20.00`. To store metadata about the system itself, attach it to ID `00.00`.
 
@@ -174,11 +174,11 @@ A metadata key:
 
 The following keys are reserved and have defined semantics:
 
-| Key | Type | Description |
-|-----|------|-------------|
-| `description` | string | A human-readable description of the ID |
-| `relatesTo` | array of ID references | References to other IDs in the same system |
-| `url` | array of URIs | External resources associated with this ID |
+| Key           | Type                   | Description                                |
+| ------------- | ---------------------- | ------------------------------------------ |
+| `description` | string                 | A human-readable description of the ID     |
+| `relatesTo`   | array of ID references | References to other IDs in the same system |
+| `url`         | array of URIs          | External resources associated with this ID |
 
 Implementations MUST validate reserved keys according to their type definitions.
 
@@ -221,4 +221,3 @@ The `url` value:
 
 - MUST be an array.
 - Each element MUST be a valid URI (per RFC 3986).
-
