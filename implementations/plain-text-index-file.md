@@ -98,21 +98,22 @@ This is a legal, if ugly, index file.
                11.01 The title of your first ID
 ```
 
+Trailing whitespace should be trimmed; titles end with the last printable character.
+
 ## Comments
 
-JavaScript comments are allowed.
+Line comments are allowed, denoted by `//`. Any content after `//` should be ignored by a parser until the end of the line.
 
-Multi-line comments may be used if they are the only text on the line.
+Whitespace between a line comment and a title should be trimmed, as if no comment were present.
 
 ```txt
-10-19 My area     // which I can comment like this
-   11 My category /* or like this */
-   /* multiline comments
-      are allowed on their own lines
-    */
-   11.01 Whereas this /* is not, as it breaks
-                         the ID
-                       */
+10-19 My area     // This is a comment
+   11 My category     // This title ends with "category"
+      // Comments may be the only content
+      // on a line and multiple may occur
+      // in a row if desired
+   11.01 My ID
+   // 11.02 This is not an ID
 ```
 
 ## Metadata
