@@ -18,7 +18,7 @@ The hierarchy is: **System → Area → Category → ID**
 | Type | Format | Example | Notes |
 |------|--------|---------|-------|
 | System | `[A-Z][0-9][0-9]` | `A01` | Optional identifier |
-| Area | `X0-X9` | `10-19` | Groups categories by first digit |
+| Area | `[0-9]0-[0-9]9` | `10-19` | Groups categories by first digit |
 | Category | `[0-9][0-9]` | `11` | Must belong to matching area |
 | ID | `[0-9][0-9].[0-9][0-9]` | `11.01` | Must belong to matching category |
 
