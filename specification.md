@@ -38,6 +38,7 @@ There is no partial conformance. A system, document, or validator conforms, or i
 
 # Terminology
 
+- **Domain**: a group of systems that share one or more components. Systems in separate domains do not conflict.
 - **Identifier**: every system, area, category, and ID has a number. This number is its identifier. Examples: `A01`, `10-19`, `11`, `11.01`.
 - **Title**: the text that follows an identifier.
 - **Representation**: a set of rules for writing a system in a medium. Each representation is specified in [representations/](representations/).
@@ -88,7 +89,7 @@ If present, the system identifier:
 
 - MUST match the pattern `[A-Z][0-9][0-9]`.
   - Valid range: `A00` through `Z99`.
-- MUST be unique across all systems in scope.
+- MUST be unique in its domain.
 
 ## Constraints
 
@@ -101,7 +102,7 @@ If present, the system identifier:
 
 ## Definition
 
-An **area** is a high-level grouping of categories. Areas represent broad domains within a system.
+An **area** is a high-level grouping of categories. Think of it as an 'area of your life'.
 
 ## Format
 
