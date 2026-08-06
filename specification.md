@@ -6,9 +6,35 @@ status: WORKING_DRAFT
 
 This document defines the structure and requirements for a Johnny.Decimal system.
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [BCP 14](https://www.rfc-editor.org/info/bcp14) ([RFC 2119](https://www.rfc-editor.org/rfc/rfc2119), [RFC 8174](https://www.rfc-editor.org/rfc/rfc8174)) when, and only when, they appear in all capitals, as shown here.
 
----
+# Conformance
+
+## Conformance classes
+
+Three things can conform to this specification:
+
+| Class     | Definition                                                             |
+| --------- | ---------------------------------------------------------------------- |
+| System    | A collection of areas, categories, and IDs, independent of any medium. |
+| Document  | A concrete artifact holding a system in one representation.            |
+| Validator | Software that reads a document and reports violations.                 |
+
+A system conforms when it satisfies every requirement in this document.
+
+A document conforms when its system conforms and it satisfies every requirement of its representation.
+
+A validator conforms when it reports as defined below.
+
+## Reporting
+
+- A validator MUST report a violation of a MUST or MUST NOT requirement as an **error**.
+- A validator MUST report a violation of a SHOULD or SHOULD NOT requirement as a **warning**.
+- A validator MUST NOT report an error or a warning for conformant content.
+
+## Partial conformance
+
+There is no partial conformance. A system, document, or validator conforms, or it does not.
 
 # Types
 
