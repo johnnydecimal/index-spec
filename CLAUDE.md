@@ -8,8 +8,8 @@ This is the **specification repository** for the Johnny.Decimal system - a metho
 
 This repository contains:
 - `specification.md` - The formal, implementation-agnostic specification (uses RFC 2119 keywords)
-- `types/index.ts` - TypeScript type definitions for a Johnny.Decimal system
-- `implementations/` - Documentation for specific implementations (e.g., plain-text index files)
+- `representations/` - Documentation for specific representations (e.g., plain-text index files)
+- `tests/` - Test cases, one folder per representation
 
 ## Johnny.Decimal structure
 
@@ -30,7 +30,8 @@ Key constraints:
 
 ## Working with this repository
 
-This is a specification/documentation repository. There is no build system, tests, or runtime code. Changes should:
+This is a specification/documentation repository. There is no build system or runtime code. Changes should:
 - Maintain RFC 2119 compliance in specification.md
-- Keep TypeScript types in sync with the specification
 - Follow the existing markdown formatting conventions
+
+John writes all English prose in this repository himself. Claude writes only formal artifacts: statecharts, schemas, type definitions, test cases.
