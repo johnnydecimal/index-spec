@@ -39,8 +39,8 @@ There is no partial conformance. A system, document, or validator conforms, or i
 # Terminology
 
 - **Domain**: a group of systems that share one or more components. Systems in separate domains do not conflict.
-- **Identifier**: every system, area, category, and ID has a number. This number is its identifier. Examples: `A01`, `10-19`, `11`, `11.01`.
-- **Title**: the text that follows an identifier.
+- **Number**: every system, area, category, and ID has a number. Examples: `A01`, `10-19`, `11`, `11.01`.
+- **Title**: the text that follows a number.
 - **Representation**: a set of rules for writing a system in a medium. Each representation is specified in [representations/](representations/).
 
 ---
@@ -81,11 +81,11 @@ A title:
 
 A **system** is a contained collection of areas, categories, and IDs.
 
-## System identifier
+## System number
 
-A system identifier is OPTIONAL.
+A system number is OPTIONAL.
 
-If present, the system identifier:
+If present, the system number:
 
 - MUST match the pattern `[A-Z][0-9][0-9]`.
   - Valid range: `A00` through `Z99`.
@@ -93,7 +93,7 @@ If present, the system identifier:
 
 ## Constraints
 
-- A system without an identifier is valid.
+- A system without a number is valid.
 - A system MAY contain zero or more areas.
 
 # Areas
@@ -104,11 +104,11 @@ An **area** is a high-level grouping of categories. Think of it as an 'area of y
 
 ## Format
 
-An area identifier MUST be one of: `00-09`, `10-19`, `20-29`, `30-39`, `40-49`, `50-59`, `60-69`, `70-79`, `80-89`, `90-99`.
+An area's number MUST be one of: `00-09`, `10-19`, `20-29`, `30-39`, `40-49`, `50-59`, `60-69`, `70-79`, `80-89`, `90-99`.
 
 ## Constraints
 
-- An area's identifier MUST be unique within its system.
+- An area's number MUST be unique within its system.
 - An area contains zero or more categories.
 
 # Categories
@@ -119,11 +119,11 @@ A **category** is a grouping of related IDs.
 
 ## Format
 
-A category identifier MUST match the pattern `[0-9][0-9]`.
+A category's number MUST match the pattern `[0-9][0-9]`.
 
 ## Constraints
 
-- A category's identifier MUST be unique within its system.
+- A category's number MUST be unique within its system.
 - A category MUST belong to exactly one area: the area whose first digit matches the category's first digit. Example: category `11` belongs to area `10-19`.
 - A category contains zero or more IDs.
 
@@ -135,21 +135,14 @@ An **ID** is the fundamental unit of organisation in a Johnny.Decimal system. An
 
 ## Format
 
-An ID:
+An ID's number MUST match the pattern `[0-9][0-9].[0-9][0-9]`.
 
-- MUST match the pattern `[0-9][0-9].[0-9][0-9]`.
-  - Valid range: `00.00` through `99.99`.
-
-The portion before the decimal is the **category component**. The portion after the decimal is the **ID component**.
+The part before the `.` is the **category component**. The part after the `.` is the **ID component**.
 
 ## Constraints
 
-- An ID MUST be unique within its system.
-- An ID MUST belong to exactly one category.
-- An ID MUST be contained within the category matching its category component.
-  - ID `15.52` MUST belong to category `15`.
-  - ID `15.52` MUST NOT belong to category `16`.
-- An ID MUST NOT exist without a parent category.
+- An ID's number MUST be unique within its system.
+- An ID MUST belong to exactly one category: the category whose number matches the ID's category component. Example: ID `15.52` belongs to category `15`.
 
 ---
 
