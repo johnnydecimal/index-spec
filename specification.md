@@ -88,7 +88,6 @@ A system number is OPTIONAL.
 If present, the system number:
 
 - MUST match the pattern `[A-Z][0-9][0-9]`.
-  - Valid range: `A00` through `Z99`.
 - MUST be unique in its domain.
 
 ## Constraints
