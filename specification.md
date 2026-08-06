@@ -115,26 +115,17 @@ An area identifier MUST be one of: `00-09`, `10-19`, `20-29`, `30-39`, `40-49`, 
 
 ## Definition
 
-A **category** is a grouping of IDs. Categories represent a specific domain of work or collection of related items.
+A **category** is a grouping of related IDs.
 
 ## Format
 
-A category identifier:
-
-- MUST match the pattern `[0-9][0-9]`.
-  - Valid range: `00` through `99`.
+A category identifier MUST match the pattern `[0-9][0-9]`.
 
 ## Constraints
 
-- A category MUST be unique within its system.
-- A category MUST belong to exactly one area.
-- A category MUST be contained within the area whose range includes the category number.
-  - Category `11` MUST belong to area `10-19`.
-  - Category `11` MUST NOT belong to area `20-29`.
-- A category MAY contain zero or more IDs.
-- A category MUST NOT exist without a parent area.
-
----
+- A category's identifier MUST be unique within its system.
+- A category MUST belong to exactly one area: the area whose first digit matches the category's first digit. Example: category `11` belongs to area `10-19`.
+- A category contains zero or more IDs.
 
 # IDs
 
