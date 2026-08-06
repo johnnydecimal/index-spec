@@ -96,8 +96,6 @@ If present, the system identifier:
 - A system without an identifier is valid.
 - A system MAY contain zero or more areas.
 
----
-
 # Areas
 
 ## Definition
@@ -106,20 +104,12 @@ An **area** is a high-level grouping of categories. Think of it as an 'area of y
 
 ## Format
 
-An area identifier:
-
-- MUST match the pattern `[0-9]0-[0-9]9` where both digits are identical.
-  - Valid values: `00-09`, `10-19`, `20-29`, `30-39`, `40-49`, `50-59`, `60-69`, `70-79`, `80-89`, `90-99`.
+An area identifier MUST be one of: `00-09`, `10-19`, `20-29`, `30-39`, `40-49`, `50-59`, `60-69`, `70-79`, `80-89`, `90-99`.
 
 ## Constraints
 
-- An area MUST be unique within its system.
-- An area MAY contain zero or more categories.
-- An area MUST only contain categories whose first digit matches the area's first digit.
-  - Area `10-19` MAY contain categories `10` through `19`.
-  - Area `10-19` MUST NOT contain category `20`.
-
----
+- An area's identifier MUST be unique within its system.
+- An area contains zero or more categories.
 
 # Categories
 
