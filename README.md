@@ -6,9 +6,9 @@ This repository contains:
 
 An implementation-agnostic specification of the Johnny.Decimal system.
 
-## [implementations/](/implementations/)
+## [representations/](/representations/)
 
-Implementations of this specification.
+How a system is written in each medium: a plain-text index file, JSON, or the file system.
 
 ## Discussion
 
