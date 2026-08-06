@@ -36,37 +36,43 @@ A validator conforms when it reports as defined below.
 
 There is no partial conformance. A system, document, or validator conforms, or it does not.
 
-# Types
+# Terminology
 
-Each record in a Johnny.Decimal system has a type. Implementations that expose type information MUST use the following canonical values:
-
-| Type     | Value      |
-| -------- | ---------- |
-| System   | `system`   |
-| Area     | `area`     |
-| Category | `category` |
-| ID       | `id`       |
-
-Type values MUST be lowercase.
+- **Identifier**: every system, area, category, and ID has a number. This number is its identifier. Examples: `A01`, `10-19`, `11`, `11.01`.
+- **Title**: the text that follows an identifier.
+- **Representation**: a set of rules for writing a system in a medium. Each representation is specified in [representations/](representations/).
 
 ---
 
 # Titles
 
-Systems, areas, categories, and IDs MUST each have a title.
+Every system, area, category, and ID MUST have a title.
 
 ## Format
 
 A title:
 
 - MUST contain at least 1 character.
-- MUST NOT exceed 255 characters.
+- MUST NOT be longer than 200 bytes when encoded as UTF-8.
 
-## Constraints
+## Characters
 
-- A title MAY contain any printable Unicode characters.
+A title:
 
----
+- MUST NOT contain these characters: `/ \ : * ? " < > | # ^ [ ]`
+- MUST NOT contain control characters (Unicode category Cc). This forbids newlines and tabs.
+- MUST NOT start or end with a space.
+- MUST NOT end with a period.
+- MAY contain all other Unicode characters. This includes emoji.
+
+## Uniqueness
+
+- Two items MAY have the same title.
+
+## Rationale
+
+- These rules make a title safe on macOS, Linux, and Windows, and in Obsidian. The rules come from the strictest of these targets.
+- 200 bytes ensures this fits in the 255-byte filename limit with plenty of room to spare. You should prefer shorter titles.
 
 # Systems
 
