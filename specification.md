@@ -144,8 +144,6 @@ The part before the `.` is the **category component**. The part after the `.` is
 - An ID's number MUST be unique within its system.
 - An ID MUST belong to exactly one category: the category whose number matches the ID's category component. Example: ID `15.52` belongs to category `15`.
 
----
-
 # Metadata
 
 ## Definition
@@ -171,60 +169,25 @@ To store metadata about category `21`, attach it to ID `21.00`. To store metadat
 
 ## Keys
 
+Keys that start with `jd-` are reserved for this specification. All other keys belong to the user.
+
 A metadata key:
 
 - MUST contain at least 1 character.
-- MUST match the pattern `[a-zA-Z][a-zA-Z0-9_]*`.
+- MUST match the pattern `[a-zA-Z][a-zA-Z0-9_-]*`.
 - MUST be unique within the metadata of a single ID.
-
-### Reserved keys
-
-The following keys are reserved and have defined semantics:
-
-| Key           | Type                   | Description                                |
-| ------------- | ---------------------- | ------------------------------------------ |
-| `description` | string                 | A human-readable description of the ID     |
-| `relatesTo`   | array of ID references | References to other IDs in the same system |
-| `url`         | array of URIs          | External resources associated with this ID |
-
-Implementations MUST validate reserved keys according to their type definitions.
-
-Implementations SHOULD warn if a user attempts to use a reserved key with an invalid value.
-
-### User-defined keys
-
-Keys not listed as reserved MAY be used freely by users.
-
-User-defined keys SHOULD use camelCase for consistency with reserved keys.
+- MUST NOT start with `jd-` unless this specification defines it. This version defines none.
 
 ## Values
 
-A metadata value:
+A metadata value MUST be one of these types:
 
-- MUST be a valid JSON value (string, number, boolean, array, or object).
-- MUST NOT be null.
+- **Text**: a sequence of zero or more characters.
+- **Integer**: a whole number.
+- **Boolean**: true or false.
+- **List**: an ordered sequence of zero or more values.
+- **Map**: a set of key/value pairs. Keys in a map follow the metadata key rules.
 
-### description
+There is no null value. To clear a value, remove its key.
 
-The `description` value:
-
-- MUST be a string.
-- MAY be of arbitrary length.
-- Is interpreted as GitHub-Flavored Markdown (GFM). Plain text without formatting is valid.
-- Implementations that do not support Markdown rendering SHOULD display the raw text.
-
-### relatesTo
-
-The `relatesTo` value:
-
-- MUST be an array.
-- Each element MUST be a string matching the ID format (`[0-9][0-9].[0-9][0-9]`).
-- Each referenced ID SHOULD exist in the same system.
-- Relationships are one-way; implementations MAY derive backlinks.
-
-### url
-
-The `url` value:
-
-- MUST be an array.
-- Each element MUST be a valid URI (per RFC 3986).
+Each representation defines how it writes each type.
