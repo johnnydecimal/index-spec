@@ -79,7 +79,7 @@ A title:
 
 ## Definition
 
-A **system** is a contained collection of areas, categories, and IDs.
+A **system** is a collection of areas, categories, and IDs.
 
 ## System number
 
@@ -94,7 +94,7 @@ If present, the system number:
 ## Constraints
 
 - A system without a number is valid.
-- A system MAY contain zero or more areas.
+- A system contains zero or more areas.
 
 # Areas
 
