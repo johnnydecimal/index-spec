@@ -20,9 +20,9 @@ Three things can conform to this specification:
 | Document  | A concrete artifact holding a system in one representation.            |
 | Validator | Software that reads a document and reports violations.                 |
 
-A system conforms when it satisfies every requirement in this document.
+A system conforms when it satisfies every MUST-level requirement in this document.
 
-A document conforms when its system conforms and it satisfies every requirement of its representation.
+A document conforms when its system conforms and it satisfies every MUST-level requirement of its representation.
 
 A validator conforms when it reports as defined below.
 
