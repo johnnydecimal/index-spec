@@ -14,11 +14,11 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 Three things can conform to this specification:
 
-| Class     | Definition                                                             |
-| --------- | ---------------------------------------------------------------------- |
+| Class     | Definition                                                                            |
+| --------- | ------------------------------------------------------------------------------------- |
 | System    | A collection of areas, categories, IDs, and work packages, independent of any medium. |
-| Document  | A concrete artifact holding a system in one representation.            |
-| Validator | Software that reads a document and reports violations.                 |
+| Document  | A concrete artifact holding a system in one representation.                           |
+| Validator | Software that reads a document and reports violations.                                |
 
 A system conforms when it satisfies every MUST-level requirement in this document.
 
@@ -39,7 +39,7 @@ There is no partial conformance. A system, document, or validator conforms, or i
 # Terminology
 
 - **Domain**: a group of systems that share one or more components. Systems in separate domains do not conflict.
-- **Number**: every system, area, category, ID, and work package has a number. Examples: `A01`, `10-19`, `11`, `11.01`, `W0175~31.13`.
+- **Number**: every system, area, category, ID, and work package has a number. Examples: `A01`, `10-19`, `11`, `11.01`, `W0011`.
 - **Title**: the text that follows a number.
 - **Representation**: a set of rules for writing a system in a medium. Each representation is specified in [representations/](representations/).
 
@@ -143,6 +143,29 @@ The part before the `.` is the **category component**. The part after the `.` is
 
 - An ID's number MUST be unique within its system.
 - An ID MUST belong to exactly one category: the category whose number matches the ID's category component. Example: ID `15.52` belongs to category `15`.
+
+# Work packages
+
+## Definition
+
+A **work package** is a discrete piece of work that belongs to an ID. An ID represents a thing that persists; a work package represents work related to that thing.
+
+## Format
+
+A work package's number MUST match the pattern `W[0-9][0-9][0-9][0-9]`.
+
+A work package's number MUST be written with its **parent reference**: a `~` followed by the number of the ID the work package belongs to. The title follows the parent reference. Example: `W0011~11.14 Renew driver licence` is work package `W0011`, which belongs to ID `11.14`.
+
+## Constraints
+
+- A work package's number MUST be unique within its system.
+- A work package MUST belong to exactly one ID: the ID whose number matches its parent reference. Example: work package `W0011~11.14` belongs to ID `11.14`.
+
+## Reserved numbers
+
+- Work package numbers `W0000` through `W0010` are reserved for system management. This mirrors the standard zeros.
+- The first ordinary work package SHOULD be `W0011`.
+- This version of the specification assigns no meaning to any reserved number.
 
 # Metadata
 
