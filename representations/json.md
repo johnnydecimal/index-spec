@@ -1,7 +1,3 @@
----
-status: WORKING_DRAFT
----
-
 # JSON implementation
 
 This document defines the JSON serialization format for a Johnny.Decimal system.

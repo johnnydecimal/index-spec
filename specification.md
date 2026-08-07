@@ -1,7 +1,3 @@
----
-status: WORKING_DRAFT
----
-
 # Johnny.Decimal specification
 
 This document defines the structure and requirements for a Johnny.Decimal system.
@@ -43,6 +39,7 @@ There is no partial conformance. A system, document, or validator conforms, or i
 - **Number**: every system, area, category, ID, and work package has a number. Examples: `A01`, `10-19`, `11`, `11.01`, `W0011`.
 - **Title**: the text that follows a number, a parent reference, or a marker.
 - **Representation**: a set of rules for writing a system in a medium. Each representation is specified in [representations/](representations/).
+- **JDex**: the document that defines a system – a plain-text file, a database; any concrete form that conforms to this specification. An item that is not in the JDex is not in the system. The name is short for Johnny.Decimal index.
 
 ---
 
