@@ -47,7 +47,7 @@ There is no partial conformance. A system, document, or validator conforms, or i
 
 # Titles
 
-Every system, area, category, and ID MUST have a title.
+Every system, area, category, ID, and work package MUST have a title.
 
 ## Format
 
