@@ -14,11 +14,11 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 Three things can conform to this specification:
 
-| Class     | Definition                                                                            |
-| --------- | ------------------------------------------------------------------------------------- |
+| Class     | Definition                                                                                      |
+| --------- | ----------------------------------------------------------------------------------------------- |
 | System    | A collection of areas, categories, IDs, work packages, and children, independent of any medium. |
-| Document  | A concrete artifact holding a system in one representation.                           |
-| Validator | Software that reads a document and reports violations.                                |
+| Document  | A concrete artifact holding a system in one representation.                                     |
+| Validator | Software that reads a document and reports violations.                                          |
 
 A system conforms when it satisfies every MUST-level requirement in this document.
 
@@ -38,9 +38,10 @@ There is no partial conformance. A system, document, or validator conforms, or i
 
 # Terminology
 
-- **Domain**: a group of systems that share one or more components. Systems in separate domains do not conflict.
+- **Domain**: a group of systems whose numbers share one namespace. You decide where a domain's boundary is. Systems in separate domains do not conflict.
+- **Item**: a system, area, category, ID, work package, or child.
 - **Number**: every system, area, category, ID, and work package has a number. Examples: `A01`, `10-19`, `11`, `11.01`, `W0011`.
-- **Title**: the text that follows a number.
+- **Title**: the text that follows a number, a parent reference, or a marker.
 - **Representation**: a set of rules for writing a system in a medium. Each representation is specified in [representations/](representations/).
 
 ---
@@ -64,6 +65,20 @@ A title:
 W0011~11.14 Title
 ```
 
+## Markers
+
+When a numbered item is written, the character that follows its number – for a work package, its parent reference – MUST be one of:
+
+| Character | What follows          |
+| --------- | --------------------- |
+| a space   | The item's title.     |
+| `+`       | An extension's title. |
+| `)`       | A sub-note's title.   |
+
+Extensions and sub-notes are children (see Children). All other characters in this position are reserved for future versions of this specification.
+
+Systems, areas, and categories take no children. When one is written, the character that follows its number MUST be a space.
+
 ## Characters
 
 A title:
@@ -71,6 +86,7 @@ A title:
 - MUST NOT contain these characters: `/ \ : * ? " < > | # ^ [ ]`
 - MUST NOT contain control characters (Unicode category Cc). This forbids newlines and tabs.
 - MUST NOT start or end with a space.
+- MUST NOT start with `+` or `)`. A title that opens with a marker character imitates a child.
 - MUST NOT end with a period.
 - MAY contain all other Unicode characters. This includes emoji.
 
@@ -174,8 +190,8 @@ A work package's number MUST be written with its **parent reference**: a `~` fol
 
 ## Reserved numbers
 
-- Work package numbers `W0000` through `W0010` are reserved for system management. This mirrors the standard zeros.
-- The first ordinary work package SHOULD be `W0011`.
+- Work package numbers `W0000` through `W0010` are reserved for system management. This mirrors the standard zeros (see Metadata).
+- The first user work package should be `W0011`. A validator cannot tell a user work package from a system-management one, so this is guidance, not a rule.
 - This version of the specification assigns no meaning to any reserved number.
 
 # Children
@@ -193,7 +209,7 @@ A child is written as its parent's number, then its **marker**, then the child's
 
 A single space MUST separate the marker and the title. The space is a separator, not part of the title.
 
-A sub-note's title MAY contain `)` or `+`. An extension's title MAY contain `)` but MUST NOT contain `+`. This reserves multiple extensions on one child for future versions of this specification.
+A sub-note's title MAY contain `)` or `+`. An extension's title MAY contain `)` but MUST NOT contain `+`. This reserves a future form in which one child carries more than one extension title.
 
 Examples:
 
@@ -202,24 +218,11 @@ Examples:
 - `53.07+ E32` is an extension of ID `53.07`.
 - `W0012~31.13) Video production checklist` is a sub-note of work package `W0012`.
 
-## Markers
-
-When an item is written, the character that follows its number – for a work package, its parent reference – MUST be one of:
-
-| Character | What follows          |
-| --------- | --------------------- |
-| a space   | The item's title.     |
-| `+`       | An extension's title. |
-| `)`       | A sub-note's title.   |
-
-All other characters in this position are reserved for future versions of this specification.
-
-Systems, areas, and categories take no children. When one is written, the character that follows its number MUST be a space.
-
 ## Constraints
 
 - A child MUST belong to exactly one ID or work package: the item whose number precedes the marker.
 - A child's parent MUST exist in the system.
+- Two children of one parent MUST NOT have the same kind and the same title.
 - A child MUST NOT have children.
 - A child has no metadata of its own: it inherits its parent's metadata.
 
@@ -243,7 +246,7 @@ Systems, areas, and categories take no children. When one is written, the charac
 
 ### Rationale
 
-IDs and work packages are the leaf nodes of a Johnny.Decimal system and the only places where data exists. A child inherits its parent's metadata (see Children). Metadata about higher-level structures is stored using **standard zeros**:
+IDs and work packages are the only places in a Johnny.Decimal system where data exists. A child inherits its parent's metadata (see Children). Metadata about higher-level structures is stored using **standard zeros**:
 
 | Structure     | Standard zero |
 | ------------- | ------------- |
@@ -268,8 +271,8 @@ A metadata key:
 
 A metadata value MUST be one of these types:
 
-- **Text**: a sequence of zero or more characters.
-- **Integer**: a whole number.
+- **Text**: a sequence of zero or more Unicode characters. It MUST NOT contain control characters (Unicode category Cc), except tab, line feed, and carriage return.
+- **Integer**: a whole number from -(2^53 - 1) to 2^53 - 1. This is the interoperable range of [I-JSON](https://www.rfc-editor.org/rfc/rfc7493): the largest that survives every representation, including JSON parsed as IEEE 754 doubles.
 - **Boolean**: true or false.
 - **List**: an ordered sequence of zero or more values.
 - **Map**: a set of key/value pairs. Keys in a map follow the metadata key rules.
@@ -277,3 +280,9 @@ A metadata value MUST be one of these types:
 There is no null value. To clear a value, remove its key.
 
 Each representation defines how it writes each type.
+
+# AI disclosure
+
+Some of this text was drafted with Claude, an AI model, working under my constant supervision. The design decisions in this specification are mine. I reviewed every line.
+
+I commit to notifying you if words generated by an AI appear in my published work. This is that notice.

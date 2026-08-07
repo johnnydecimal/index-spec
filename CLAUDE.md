@@ -13,7 +13,7 @@ This repository contains:
 
 ## Johnny.Decimal structure
 
-The hierarchy is: **System → Area → Category → ID**
+The hierarchy is: **System → Area → Category → ID**. Work packages belong to the system and reference one ID. Children attach to IDs and work packages.
 
 | Type | Format | Example | Notes |
 |------|--------|---------|-------|
@@ -21,12 +21,16 @@ The hierarchy is: **System → Area → Category → ID**
 | Area | `[0-9]0-[0-9]9` | `10-19` | Groups categories by first digit |
 | Category | `[0-9][0-9]` | `11` | Must belong to matching area |
 | ID | `[0-9][0-9].[0-9][0-9]` | `11.01` | Must belong to matching category |
+| Work package | `W[0-9][0-9][0-9][0-9]` | `W0011~11.14` | Always written with `~` parent reference; unique per system |
+| Child | parent, marker, title | `11.14+ Belinda` | `+` extension or `)` sub-note; no grandchildren |
 
 Key constraints:
 - Categories must be contained within their area (category `11` must be in area `10-19`)
 - IDs must be contained within their category (ID `11.01` must be in category `11`)
+- Work packages belong to exactly one ID; `W0000`-`W0010` are reserved
+- Children attach to IDs and work packages only
 - Parents may be childless; orphans are disallowed
-- All items require titles (1-255 characters)
+- All items require titles (1 character minimum, 200 bytes UTF-8 maximum)
 
 ## Working with this repository
 
