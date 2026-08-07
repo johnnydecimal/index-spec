@@ -16,7 +16,7 @@ Three things can conform to this specification:
 
 | Class     | Definition                                                                            |
 | --------- | ------------------------------------------------------------------------------------- |
-| System    | A collection of areas, categories, IDs, and work packages, independent of any medium. |
+| System    | A collection of areas, categories, IDs, work packages, and children, independent of any medium. |
 | Document  | A concrete artifact holding a system in one representation.                           |
 | Validator | Software that reads a document and reports violations.                                |
 
@@ -30,7 +30,7 @@ A validator conforms when it reports as defined below.
 
 - A validator MUST report a violation of a MUST or MUST NOT requirement as an **error**.
 - A validator MUST report a violation of a SHOULD or SHOULD NOT requirement as a **warning**.
-- A validator MUST NOT report an error or a warning for conformant content.
+- A validator MUST NOT report a violation that does not exist.
 
 ## Partial conformance
 
@@ -55,12 +55,13 @@ A title:
 
 - MUST contain at least 1 character.
 - MUST NOT be longer than 200 bytes when encoded as UTF-8.
-- When a title is written after a number or after a child's marker, a single space MUST separate them. The three forms are:
+- When a title is written after a number, after a work package's parent reference, or after a child's marker, a single space MUST separate them. The four forms are:
 
 ```text
 11.11 Title
 11.11+ Title
 11.11) Title
+W0011~11.14 Title
 ```
 
 ## Characters
@@ -86,7 +87,7 @@ A title:
 
 ## Definition
 
-A **system** is a collection of areas, categories, IDs, and work packages.
+A **system** is a collection of areas, categories, IDs, work packages, and children.
 
 ## System number
 
@@ -132,6 +133,7 @@ A category's number MUST match the pattern `[0-9][0-9]`.
 
 - A category's number MUST be unique within its system.
 - A category MUST belong to exactly one area: the area whose first digit matches the category's first digit. Example: category `11` belongs to area `10-19`.
+- A category's area MUST exist in the system.
 - A category contains zero or more IDs.
 
 # IDs
@@ -150,6 +152,7 @@ The part before the `.` is the **category component**. The part after the `.` is
 
 - An ID's number MUST be unique within its system.
 - An ID MUST belong to exactly one category: the category whose number matches the ID's category component. Example: ID `15.52` belongs to category `15`.
+- An ID's category MUST exist in the system.
 
 # Work packages
 
@@ -167,6 +170,7 @@ A work package's number MUST be written with its **parent reference**: a `~` fol
 
 - A work package's number MUST be unique within its system.
 - A work package MUST belong to exactly one ID: the ID whose number matches its parent reference. Example: work package `W0011~11.14` belongs to ID `11.14`.
+- A work package's ID MUST exist in the system.
 
 ## Reserved numbers
 
@@ -210,11 +214,12 @@ When an item is written, the character that follows its number – for a work pa
 
 All other characters in this position are reserved for future versions of this specification.
 
-Systems, areas, and categories take no children: for them, only a space and the title may follow the number.
+Systems, areas, and categories take no children. When one is written, the character that follows its number MUST be a space.
 
 ## Constraints
 
 - A child MUST belong to exactly one ID or work package: the item whose number precedes the marker.
+- A child's parent MUST exist in the system.
 - A child MUST NOT have children.
 - A child has no metadata of its own: it inherits its parent's metadata.
 
@@ -255,7 +260,7 @@ Keys that start with `jd-` are reserved for this specification. All other keys b
 A metadata key:
 
 - MUST contain at least 1 character.
-- MUST match the pattern `[a-zA-Z][a-zA-Z0-9_-]*`.
+- MUST match the pattern `[a-z][a-z0-9_-]*`. This forbids uppercase: keys compare byte-for-byte in every representation.
 - MUST be unique within the metadata of a single ID or work package.
 - MUST NOT start with `jd-` unless this specification defines it. This version defines none.
 
