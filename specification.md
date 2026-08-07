@@ -47,7 +47,7 @@ There is no partial conformance. A system, document, or validator conforms, or i
 
 # Titles
 
-Every system, area, category, ID, and work package MUST have a title.
+Every system, area, category, ID, work package, and child MUST have a title.
 
 ## Format
 
@@ -229,16 +229,16 @@ Systems, areas, and categories take no children: for them, only a space and the 
 
 ## Definition
 
-**Metadata** is a collection of key/value pairs attached to an ID.
+**Metadata** is a collection of key/value pairs attached to an ID or a work package.
 
 ## Applicability
 
-- Metadata MAY be attached to IDs.
-- Metadata MUST NOT be attached to systems, areas, or categories.
+- Metadata MAY be attached to IDs and work packages.
+- Metadata MUST NOT be attached to systems, areas, categories, or children.
 
 ### Rationale
 
-IDs are the leaf nodes of a Johnny.Decimal system and the only place where data exists. Metadata about higher-level structures is stored using **standard zeros**:
+IDs and work packages are the leaf nodes of a Johnny.Decimal system and the only places where data exists. A child inherits its parent's metadata (see Children). Metadata about higher-level structures is stored using **standard zeros**:
 
 | Structure     | Standard zero |
 | ------------- | ------------- |
@@ -256,7 +256,7 @@ A metadata key:
 
 - MUST contain at least 1 character.
 - MUST match the pattern `[a-zA-Z][a-zA-Z0-9_-]*`.
-- MUST be unique within the metadata of a single ID.
+- MUST be unique within the metadata of a single ID or work package.
 - MUST NOT start with `jd-` unless this specification defines it. This version defines none.
 
 ## Values
