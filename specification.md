@@ -16,7 +16,7 @@ Three things can conform to this specification:
 
 | Class     | Definition                                                             |
 | --------- | ---------------------------------------------------------------------- |
-| System    | A collection of areas, categories, and IDs, independent of any medium. |
+| System    | A collection of areas, categories, IDs, and work packages, independent of any medium. |
 | Document  | A concrete artifact holding a system in one representation.            |
 | Validator | Software that reads a document and reports violations.                 |
 
@@ -79,7 +79,7 @@ A title:
 
 ## Definition
 
-A **system** is a collection of areas, categories, and IDs.
+A **system** is a collection of areas, categories, IDs, and work packages.
 
 ## System number
 
@@ -94,6 +94,7 @@ If present, the system number:
 
 - A system without a number is valid.
 - A system contains zero or more areas.
+- A system contains zero or more work packages.
 
 # Areas
 
