@@ -39,7 +39,7 @@ There is no partial conformance. A system, document, or validator conforms, or i
 # Terminology
 
 - **Domain**: a group of systems that share one or more components. Systems in separate domains do not conflict.
-- **Number**: every system, area, category, and ID has a number. Examples: `A01`, `10-19`, `11`, `11.01`.
+- **Number**: every system, area, category, ID, and work package has a number. Examples: `A01`, `10-19`, `11`, `11.01`, `W0175~31.13`.
 - **Title**: the text that follows a number.
 - **Representation**: a set of rules for writing a system in a medium. Each representation is specified in [representations/](representations/).
 
