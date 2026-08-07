@@ -55,6 +55,13 @@ A title:
 
 - MUST contain at least 1 character.
 - MUST NOT be longer than 200 bytes when encoded as UTF-8.
+- When a title is written after a number or after a child's marker, a single space MUST separate them. The three forms are:
+
+```text
+11.11 Title
+11.11+ Title
+11.11) Title
+```
 
 ## Characters
 
@@ -166,6 +173,57 @@ A work package's number MUST be written with its **parent reference**: a `~` fol
 - Work package numbers `W0000` through `W0010` are reserved for system management. This mirrors the standard zeros.
 - The first ordinary work package SHOULD be `W0011`.
 - This version of the specification assigns no meaning to any reserved number.
+
+# Children
+
+## Definition
+
+A **child** is an item that belongs to an ID or a work package. A child is one of two kinds:
+
+- An **extension**: a child that repeats across the system. Its marker is `+`.
+- A **sub-note**: a one-off child. Its marker is `)`.
+
+## Format
+
+A child is written as its parent's number, then its **marker**, then the child's title. When the parent is a work package, the marker follows the parent reference.
+
+A single space MUST separate the marker and the title. The space is a separator, not part of the title.
+
+A sub-note's title MAY contain `)` or `+`. An extension's title MAY contain `)` but MUST NOT contain `+`. This reserves multiple extensions on one child for future versions of this specification.
+
+Examples:
+
+- `11.14) Notes from the licence office` is a sub-note of ID `11.14`.
+- `11.14+ Belinda` is an extension of ID `11.14`.
+- `53.07+ E32` is an extension of ID `53.07`.
+- `W0012~31.13) Video production checklist` is a sub-note of work package `W0012`.
+
+## Markers
+
+When an item is written, the character that follows its number – for a work package, its parent reference – MUST be one of:
+
+| Character | What follows          |
+| --------- | --------------------- |
+| a space   | The item's title.     |
+| `+`       | An extension's title. |
+| `)`       | A sub-note's title.   |
+
+All other characters in this position are reserved for future versions of this specification.
+
+Systems, areas, and categories take no children: for them, only a space and the title may follow the number.
+
+## Constraints
+
+- A child MUST belong to exactly one ID or work package: the item whose number precedes the marker.
+- A child MUST NOT have children.
+- A child has no metadata of its own: it inherits its parent's metadata.
+
+## Rationale
+
+- Extensions are systematic: related extensions share one title across the system – `11.11+ Belinda`, `13.42+ Belinda`. A search for `+ Belinda` finds them all. The mandatory space is what makes this search reliable. There is exactly one way to write an extension, so the bytes always match.
+- In contrast, sub-notes are one-offs.
+- A validator cannot check intent, so when to use which kind is guidance, not a rule.
+- Characters this specification does not claim, such as `@`, are free for you to use – multi-tagging inside a title, for example. You look after your own parsing.
 
 # Metadata
 
