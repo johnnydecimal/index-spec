@@ -8,19 +8,24 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 ## Conformance classes
 
-Three things can conform to this specification:
+Four things can conform to this specification:
 
 | Class     | Definition                                                                                      |
 | --------- | ----------------------------------------------------------------------------------------------- |
 | System    | A collection of areas, categories, IDs, work packages, and children, independent of any medium. |
 | Document  | A concrete artifact holding a system in one representation.                                     |
-| Validator | Software that reads a document and reports violations.                                          |
+| Parser    | Software that reads a document.                                                                 |
+| Validator | A parser that reports violations.                                                               |
 
-A system conforms when it satisfies every MUST-level requirement in this document.
+A requirement that names a parser or a validator applies to that class alone. Every other requirement applies to a system or to a document.
 
-A document conforms when its system conforms and it satisfies every MUST-level requirement of its representation.
+A system conforms when it satisfies every MUST-level requirement in this specification that applies to a system.
 
-A validator conforms when it reports as defined below.
+A document conforms when its system conforms and it satisfies every MUST-level requirement that applies to a document, in this specification and in its representation.
+
+A parser conforms when it satisfies every MUST-level requirement that names a parser, in this specification and in the representation that it reads.
+
+A validator conforms when it conforms as a parser and it reports as defined below.
 
 ## Reporting
 
@@ -30,13 +35,14 @@ A validator conforms when it reports as defined below.
 
 ## Partial conformance
 
-There is no partial conformance. A system, document, or validator conforms, or it does not.
+There is no partial conformance. A system, document, parser, or validator conforms, or it does not.
 
 # Terminology
 
 - **Domain**: a group of systems whose numbers share one namespace. You decide where a domain's boundary is. Systems in separate domains do not conflict.
 - **Item**: a system, area, category, ID, work package, or child.
-- **Number**: every system, area, category, ID, and work package has a number. Examples: `A01`, `10-19`, `11`, `11.01`, `W0011`.
+- **Number**: every area, category, ID, and work package has a number. A system number is optional (see Systems). Examples: `A01`, `10-19`, `11`, `11.01`, `W0011`.
+- **Pattern**: a rule for the exact characters of a number, a key, or a value. A pattern matches only when it matches the whole text. A period in a pattern is the period character.
 - **Title**: the text that follows a number, a parent reference, or a marker.
 - **Representation**: a set of rules for writing a system in a medium. Each representation is specified in [representations/](representations/).
 - **JDex**: the document that defines a system – a plain-text file, a database; any concrete form that conforms to this specification. An item that is not in the JDex is not in the system. The name is short for Johnny.Decimal index.
@@ -53,13 +59,15 @@ A title:
 
 - MUST contain at least 1 character.
 - MUST NOT be longer than 200 bytes when encoded as UTF-8.
-- When a title is written after a number, after a work package's parent reference, or after a child's marker, a single space MUST separate them. The four forms are:
+- When a title is written after a number, after a work package's parent reference, or after a child's marker, a single space MUST separate them. The six forms for an ID, a work package, and their children are:
 
 ```text
 11.11 Title
 11.11+ Title
 11.11) Title
 W0011~11.14 Title
+W0011~11.14+ Title
+W0011~11.14) Title
 ```
 
 ## Markers
@@ -89,7 +97,7 @@ A title:
 
 ## Uniqueness
 
-- Two items MAY have the same title.
+- Two items MAY have the same title. There is one exception (see Children).
 
 ## Rationale
 
@@ -113,7 +121,7 @@ If present, the system number:
 
 ## Constraints
 
-- A system without a number is valid.
+- A system without a number is valid. A representation MAY omit an unnumbered system's title.
 - A system contains zero or more areas.
 - A system contains zero or more work packages.
 
@@ -217,7 +225,7 @@ Examples:
 
 ## Constraints
 
-- A child MUST belong to exactly one ID or work package: the item whose number precedes the marker.
+- A child MUST belong to exactly one ID or work package: the item whose number – for a work package, its parent reference – precedes the marker.
 - A child's parent MUST exist in the system.
 - Two children of one parent MUST NOT have the same kind and the same title.
 - A child MUST NOT have children.
@@ -272,7 +280,7 @@ A metadata value MUST be one of these types:
 - **Integer**: a whole number from -(2^53 - 1) to 2^53 - 1. This is the interoperable range of [I-JSON](https://www.rfc-editor.org/rfc/rfc7493): the largest that survives every representation, including JSON parsed as IEEE 754 doubles.
 - **Boolean**: true or false.
 - **List**: an ordered sequence of zero or more values.
-- **Map**: a set of key/value pairs. Keys in a map follow the metadata key rules.
+- **Map**: a set of key/value pairs. A key in a map MUST follow the metadata key rules and MUST be unique within its map.
 
 There is no null value. To clear a value, remove its key.
 

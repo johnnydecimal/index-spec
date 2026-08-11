@@ -2,7 +2,7 @@
 
 This document defines the plain-text index representation of a Johnny.Decimal system. The index is one plain-text file that a person can read.
 
-This representation conforms to the [Johnny.Decimal specification](../specification.md). A document in this representation conforms when its system conforms and it satisfies every MUST-level requirement in this document.
+The [Johnny.Decimal specification](../specification.md) is the core specification. A document in this representation conforms when its system conforms and it satisfies every MUST-level requirement that applies to a document, in the core specification and in this representation.
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [BCP 14](https://www.rfc-editor.org/info/bcp14) ([RFC 2119](https://www.rfc-editor.org/rfc/rfc2119), [RFC 8174](https://www.rfc-editor.org/rfc/rfc8174)) when, and only when, they appear in all capitals, as shown here.
 
@@ -45,10 +45,10 @@ An index is a sequence of lines. A parser classifies a line by its first non-whi
 | nothing (empty) | Blank line    |
 | anything else   | Item line     |
 
-An **item line** holds exactly one item, in the written form that the core specification's Titles section defines: the number, then the title. For a work package, the number includes the parent reference. For a child, the parent's number and the marker replace the number.
+An **item line** holds exactly one item, in the written form that the core specification's Titles section defines: the number, then the title. For a work package, the parent reference comes between the number and the title. For a child, the parent's number and the marker replace the number.
 
 - An item MUST NOT span more than one line.
-- An item line that does not parse as a valid item makes the document non-conforming. A parser MUST NOT skip a line that it cannot parse.
+- An item line MUST parse as a valid item. A parser MUST NOT skip a line that it cannot parse.
 
 The core specification defines the number formats, containment, uniqueness, and title rules. This document does not add to them and does not repeat them.
 
@@ -76,14 +76,14 @@ A parser cannot tell a title-only system line from a malformed area, category, o
 
 An area, a category, or an ID appears as one item line.
 
-The document holds the whole system, so an item's parent MUST appear in the index. Parents can be childless. Orphans are not permitted.
+The document holds the whole system, so an item's parent MUST appear in the index. An area with no categories is valid. A category with no IDs is valid. Orphans are not permitted.
 
 This index conforms.
 
 ```text
-10-19 An area with no children
+10-19 An area with no categories
 20-29 Another area
-   21 A category with no children
+   21 A category with no IDs
 ```
 
 This index does not conform.
@@ -109,7 +109,7 @@ A child appears as one item line: the parent's number, the marker, then the titl
 
 - A child's line MUST appear after its parent's item line and before the next area, category, ID, or work-package line.
 - Children of one parent MUST appear in ascending order of their marker, then their title, compared by Unicode code point. Sub-notes thus come before extensions: `)` is U+0029, `+` is U+002B.
-- A child has no metadata. A metadata line MUST NOT follow a child's line (see Metadata).
+- A child has no metadata (see Metadata).
 
 ### Rationale
 
@@ -145,7 +145,7 @@ JSON shows the cost of the opposite choice. A JSON object has no defined key ord
 Whitespace is the space (U+0020) and the tab (U+0009).
 
 - A parser MUST ignore leading whitespace on a line.
-- A parser MUST ignore trailing whitespace on a line. Content ends at the last printable character.
+- A parser MUST ignore trailing whitespace on a line. Content ends at the last character that is not whitespace.
 - A blank line MAY appear anywhere. A parser MUST ignore a blank line.
 - Indentation that shows the hierarchy is encouraged, but it confers no meaning.
 
@@ -186,14 +186,14 @@ The core specification defines metadata: the key rules, the value types, and the
 
 ### Format
 
-A metadata line is: a dash, a single space, the key, a colon, a single space, the value.
+A metadata line MUST have this form: a dash, a single space, the key, a colon, a single space, the value.
 
 ```text
       11.02 Passport
       - expires: 2028-04-15
 ```
 
-- A metadata line belongs to the nearest item line above it. That item MUST be an ID or a work package. A metadata line with no item line above it makes the document non-conforming.
+- A metadata line MUST have an item line above it. It belongs to the nearest item line above it. That item MUST be an ID or a work package.
 - Thus an item's metadata lines come before its child lines. A metadata line below a child's line would belong to the child, and a child has no metadata.
 - An item's metadata lines MUST appear in ascending order of their keys, compared by Unicode code point.
 - A value MUST NOT span more than one line.
@@ -203,7 +203,7 @@ A metadata line is: a dash, a single space, the key, a colon, a single space, th
 The value starts after the colon and space and ends at the end of the line. A parser MUST ignore trailing whitespace. The first rule that matches gives the type:
 
 1. If the value is exactly `true` or `false`, the value is a boolean.
-2. If the value matches `-?[0-9]+`, the value MUST be a valid [JSON](https://www.rfc-editor.org/rfc/rfc8259) number and is an integer. Thus a value with a leading zero, for example `042`, is an error, not text. The value `-0` is also an error: write `0`.
+2. If the value matches the pattern `-?[0-9]+`, the value MUST be a valid [JSON](https://www.rfc-editor.org/rfc/rfc8259) number and is an integer. Thus a value with a leading zero, for example `042`, is an error, not text. The value `-0` is also an error: write `0`.
 3. If the value's first character is `"`, `[`, or `{`, the whole value MUST be a single valid JSON value: a string is text, an array is a list, an object is a map. The value MUST use the canonical form of [RFC 8785](https://www.rfc-editor.org/rfc/rfc8785): no insignificant whitespace, object keys in sorted order, shortest string escapes.
 4. If no rule above matches, the value is text, exactly as written.
 
@@ -216,7 +216,7 @@ Within any JSON value:
 
 Text MUST use the bare form (rule 4) when the bare form is possible. Text MUST use the JSON string form when the text:
 
-- is exactly `true` or `false`, or matches `-?[0-9]+`,
+- is exactly `true` or `false`, or matches the pattern `-?[0-9]+`,
 - starts with `"`, `[`, or `{`,
 - starts or ends with whitespace,
 - contains a control character,
